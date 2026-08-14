@@ -67,7 +67,7 @@ export default function Testimonials() {
                 className="display-text text-[5rem] text-[#1A1A1A] leading-none select-none"
                 aria-hidden="true"
               >
-                "
+                &quot;
               </span>
 
               <StarRating rating={t.rating} />

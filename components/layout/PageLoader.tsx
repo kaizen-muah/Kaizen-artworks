@@ -4,15 +4,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 export default function PageLoader() {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return !sessionStorage.getItem('kaizen-loader-shown');
+    }
+    return true;
+  });
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    const hasSeenLoader = sessionStorage.getItem('kaizen-loader-shown');
-    if (hasSeenLoader) {
-      setIsVisible(false);
-      return;
-    }
+    if (!isVisible) return;
+
 
     // Count 0 → 100
     const duration = 1800;

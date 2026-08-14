@@ -34,7 +34,7 @@ export default function Contact() {
       
       setSubmitStatus('success');
       reset();
-    } catch (error) {
+    } catch {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
@@ -59,11 +59,11 @@ export default function Contact() {
           <div>
             <p className="label-caps text-[#E63946] mb-3">Inquiries</p>
             <h2 className="display-text text-[clamp(2.5rem,6vw,5rem)] text-[#F5F5F0] leading-tight mb-6">
-              Let's create something together.
+              Let&apos;s create something together.
             </h2>
             <p className="text-[#6B7280] text-sm md:text-base leading-relaxed max-w-md mb-12">
               Currently accepting commissions for characters, fan art, and commercial illustrations. 
-              Fill out the form with your project details, and I'll get back to you within 48 hours.
+              Fill out the form with your project details, and I&apos;ll get back to you within 48 hours.
             </p>
           </div>
 
@@ -110,7 +110,7 @@ export default function Contact() {
                   </svg>
                 </div>
                 <h3 className="text-2xl font-medium text-[#F5F5F0] mb-2">Inquiry Received</h3>
-                <p className="text-[#6B7280] text-sm mb-8">Thank you for your interest. I'll review your project details and respond within 48 hours.</p>
+                <p className="text-[#6B7280] text-sm mb-8">Thank you for your interest. I&apos;ll review your project details and respond within 48 hours.</p>
                 <button 
                   onClick={() => setSubmitStatus('idle')}
                   className="px-6 py-3 border border-[#2A2A2A] text-[#F5F5F0] text-xs font-medium tracking-widest uppercase hover:border-[#E63946] transition-colors duration-200"

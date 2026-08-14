@@ -241,7 +241,7 @@ export default function Process() {
         ref={stepsRef}
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-[#2A2A2A] relative z-20"
       >
-        {steps.map((step, i) => (
+        {steps.map((step) => (
           <div
             key={step.number}
             className="process-card bg-[#0A0A0A] p-8 flex flex-col gap-6 group hover:bg-[#111111] transition-colors duration-300 relative overflow-hidden"

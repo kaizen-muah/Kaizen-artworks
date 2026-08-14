@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo, useRef, useCallback, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useCallback } from 'react';
 import { useGesture } from '@use-gesture/react';
 import './DomeGallery.css';
 
@@ -367,7 +367,7 @@ export default function DomeGallery({
         }
         if (last) {
           draggingRef.current = false;
-          let [vMagX, vMagY] = velocity;
+          const [vMagX, vMagY] = velocity;
           const [dirX, dirY] = direction;
           let vx = vMagX * dirX;
           let vy = vMagY * dirY;
@@ -636,13 +636,13 @@ export default function DomeGallery({
       ref={rootRef}
       className="sphere-root"
       style={{
-        ['--segments-x' as any]: segments,
-        ['--segments-y' as any]: segments,
-        ['--overlay-blur-color' as any]: overlayBlurColor,
-        ['--tile-radius' as any]: imageBorderRadius,
-        ['--enlarge-radius' as any]: openedImageBorderRadius,
-        ['--image-filter' as any]: grayscale ? 'grayscale(1)' : 'none'
-      }}
+        '--segments-x': segments,
+        '--segments-y': segments,
+        '--overlay-blur-color': overlayBlurColor,
+        '--tile-radius': imageBorderRadius,
+        '--enlarge-radius': openedImageBorderRadius,
+        '--image-filter': grayscale ? 'grayscale(1)' : 'none'
+      } as React.CSSProperties}
     >
       <main ref={mainRef} className="sphere-main">
         <div className="stage">
@@ -657,11 +657,11 @@ export default function DomeGallery({
                 data-size-x={it.sizeX}
                 data-size-y={it.sizeY}
                 style={{
-                  ['--offset-x' as any]: it.x,
-                  ['--offset-y' as any]: it.y,
-                  ['--item-size-x' as any]: it.sizeX,
-                  ['--item-size-y' as any]: it.sizeY
-                }}
+                  '--offset-x': it.x,
+                  '--offset-y': it.y,
+                  '--item-size-x': it.sizeX,
+                  '--item-size-y': it.sizeY
+                } as React.CSSProperties}
               >
                 <div
                   className="item__image"
@@ -671,6 +671,7 @@ export default function DomeGallery({
                   onClick={onTileClick}
                   onPointerUp={onTilePointerUp}
                 >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={it.src} draggable={false} alt={it.alt} />
                 </div>
               </div>
