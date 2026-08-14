@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { contactSchema } from '@/lib/validations';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+export const dynamic = 'force-dynamic';
 
 // Simple in-memory rate limiting (for edge/serverless, this resets on cold boots, but suffices for basic protection)
 const rateLimit = new Map<string, number>();
@@ -10,6 +10,16 @@ const RATE_LIMIT_WINDOW_MS = 60000; // 1 minute
 
 export async function POST(request: Request) {
   try {
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      console.error('RESEND_API_KEY is missing');
+      return NextResponse.json(
+        { error: 'Email service configuration error.' },
+        { status: 500 }
+      );
+    }
+    const resend = new Resend(apiKey);
+
     const ip = request.headers.get('x-forwarded-for') || 'unknown';
     
     // Check rate limit
@@ -57,3 +67,4 @@ export async function POST(request: Request) {
     );
   }
 }
+
