@@ -96,6 +96,24 @@ body {
   to   { background-position: 200% 0; }
 }
 
+@keyframes vertical-roll {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.animate-vertical-roll {
+  animation: vertical-roll 35s linear infinite;
+  will-change: transform;
+}
+
+.animate-vertical-roll:hover {
+  animation-play-state: paused;
+}
+
 /* ─── Reduced motion ─────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { scrollToSection } from '@/lib/utils';
 
 const navLinks = [
@@ -16,6 +16,13 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
+
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
 
   useEffect(() => {
     const handleScroll = (): void => {
@@ -59,6 +66,13 @@ export default function Navbar() {
             : 'bg-transparent'
         }`}
       >
+        {/* Animated Scroll Progress Bar */}
+        <div className="absolute bottom-0 left-0 right-0 h-[2.5px] md:h-[3px] bg-[#1A1A1A]/80 overflow-hidden pointer-events-none">
+          <motion.div
+            className="h-full bg-gradient-to-r from-[#E63946] via-[#FF6B6B] to-[#E63946] shadow-[0_0_10px_rgba(230,57,70,0.9)]"
+            style={{ scaleX, transformOrigin: '0%' }}
+          />
+        </div>
         <nav
           className="flex items-center justify-between px-6 md:px-12 h-16 md:h-20 max-w-[1440px] mx-auto"
           aria-label="Main navigation"

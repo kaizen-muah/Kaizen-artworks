@@ -7,10 +7,6 @@ import { artworks } from '@/data/artworks';
 import type { ArtworkCategory, Artwork } from '@/types/artwork';
 import ArtworkModal from './ArtworkModal';
 import { staggerContainerVariants, slideUpVariants } from '@/lib/animations';
-import { gsap } from 'gsap';
-import { useGSAP } from '@gsap/react';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 
 type FilterCategory = 'all' | ArtworkCategory;
 
@@ -27,47 +23,10 @@ export default function Gallery() {
   const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
   
   const galleryRef = useRef<HTMLDivElement>(null);
-  const pathRef = useRef<SVGPathElement>(null);
-  const planeRef = useRef<SVGGElement>(null);
 
   const filtered = activeCategory === 'all'
     ? artworks
     : artworks.filter(a => a.category === activeCategory);
-
-  useGSAP(() => {
-    gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
-
-    if (pathRef.current && planeRef.current) {
-      const length = pathRef.current.getTotalLength();
-      
-      gsap.set(pathRef.current, {
-        strokeDasharray: length,
-        strokeDashoffset: length,
-      });
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: galleryRef.current,
-          start: 'top 80%',
-          end: 'bottom 20%',
-          scrub: 1.5,
-        },
-      });
-
-      tl.to(pathRef.current, {
-        strokeDashoffset: 0,
-        ease: 'none',
-      }, 0);
-
-      tl.to(planeRef.current, {
-        motionPath: {
-          path: pathRef.current,
-          autoRotate: true,
-        },
-        ease: 'none',
-      }, 0);
-    }
-  }, { scope: galleryRef });
 
   const handleCardClick = useCallback((artwork: Artwork): void => {
     setSelectedArtwork(artwork);
@@ -96,44 +55,6 @@ export default function Gallery() {
       className="section-padding content-max relative"
       aria-label="Portfolio gallery"
     >
-      {/* Paper Airplane Scroll Path */}
-      <div className="absolute inset-0 w-full h-full pointer-events-none z-10 overflow-hidden opacity-35">
-        <svg className="w-full h-full" viewBox="0 0 1200 1000" fill="none" preserveAspectRatio="none">
-          {/* Guide path - horizontal swings and loop-da-loop */}
-          <path
-            d="M 100,80 C 500,40 800,40 1100,120 C 1100,260 800,220 600,270 C 500,290 450,370 550,420 C 650,470 700,390 600,350 C 500,310 300,370 100,470 C 400,620 800,620 1100,570 C 1100,770 800,820 600,870 C 400,920 200,870 100,920"
-            stroke="rgba(245, 245, 240, 0.08)"
-            strokeWidth="2.5"
-            strokeDasharray="6 6"
-          />
-          {/* Active drawing path */}
-          <path
-            ref={pathRef}
-            d="M 100,80 C 500,40 800,40 1100,120 C 1100,260 800,220 600,270 C 500,290 450,370 550,420 C 650,470 700,390 600,350 C 500,310 300,370 100,470 C 400,620 800,620 1100,570 C 1100,770 800,820 600,870 C 400,920 200,870 100,920"
-            stroke="#E63946"
-            strokeWidth="3"
-            strokeLinecap="round"
-          />
-
-          {/* 3D Origami Paper Airplane */}
-          <g ref={planeRef} style={{ transformOrigin: '30px 30px' }}>
-            {/* Left Main Wing */}
-            <polygon points="15,20 60,30 0,10" fill="#FFFFFF" stroke="#F1F5F9" strokeWidth="0.5" />
-            {/* Right Main Wing */}
-            <polygon points="15,40 60,30 0,50" fill="#F8FAFC" stroke="#E2E8F0" strokeWidth="0.5" />
-            {/* Left Inner Fold (Crease) */}
-            <polygon points="5,30 60,30 15,20" fill="#E2E8F0" stroke="#CBD5E1" strokeWidth="0.5" />
-            {/* Right Inner Fold (Crease) */}
-            <polygon points="5,30 60,30 15,40" fill="#F1F5F9" stroke="#E2E8F0" strokeWidth="0.5" />
-            {/* Left Keel Underbody */}
-            <polygon points="15,20 60,30 35,30" fill="#94A3B8" />
-            {/* Right Keel Underbody */}
-            <polygon points="15,40 60,30 35,30" fill="#64748B" />
-            {/* Tail Fin */}
-            <polygon points="5,30 15,20 15,40" fill="#CBD5E1" stroke="#94A3B8" strokeWidth="0.5" />
-          </g>
-        </svg>
-      </div>
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
