@@ -46,18 +46,18 @@ export default function VerticalPictureRoll() {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             onClick={() => setIsMinimized(false)}
-            className="pointer-events-auto flex items-center gap-2 px-3 py-2 bg-[#0A0A0A]/90 backdrop-blur-md border border-[#E63946]/50 rounded-full text-[#F5F5F0] text-xs font-medium shadow-[0_0_15px_rgba(230,57,70,0.3)] hover:border-[#E63946] transition-all duration-300 group"
+            className="pointer-events-auto flex items-center gap-2 px-3.5 py-2.5 bg-[#0A0A0A]/95 backdrop-blur-md border border-[#E63946]/60 rounded-full text-[#F5F5F0] text-xs font-semibold shadow-[0_0_20px_rgba(230,57,70,0.4)] hover:border-[#E63946] hover:scale-105 transition-all duration-300 group cursor-pointer"
             title="Expand Art Reel"
           >
-            <span className="w-2 h-2 rounded-full bg-[#E63946] animate-pulse" />
-            <span className="text-[11px] tracking-wider uppercase font-mono">Art Reel</span>
+            <span className="w-2.5 h-2.5 rounded-full bg-[#E63946] animate-pulse" />
+            <span className="text-xs tracking-wider uppercase font-mono">Art Reel</span>
             <svg
-              width="12"
-              height="12"
+              width="14"
+              height="14"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              strokeWidth="2"
+              strokeWidth="2.5"
               className="text-[#E63946] group-hover:translate-x-0.5 transition-transform"
             >
               <path d="M15 18l-6-6 6-6" />
@@ -69,54 +69,54 @@ export default function VerticalPictureRoll() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="pointer-events-auto relative h-full w-12 sm:w-14 md:w-20 lg:w-24 bg-[#0A0A0A]/75 hover:bg-[#0A0A0A]/95 backdrop-blur-md border border-[#2A2A2A] hover:border-[#E63946]/40 rounded-2xl flex flex-col items-center overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.8)] transition-all duration-300 group/reel"
+            className="pointer-events-auto relative h-full w-16 sm:w-20 md:w-28 lg:w-36 bg-[#0A0A0A]/85 hover:bg-[#0A0A0A]/98 backdrop-blur-md border border-[#2A2A2A] hover:border-[#E63946]/50 rounded-2xl flex flex-col items-center overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.9)] transition-all duration-300 group/reel"
           >
             {/* Reel Header / Control Bar */}
-            <div className="w-full flex items-center justify-between px-1.5 py-2 border-b border-[#2A2A2A]/80 bg-[#111111]/90 z-10 text-[9px] sm:text-[10px] tracking-widest text-[#6B7280] uppercase">
-              <div className="flex items-center gap-1 mx-auto sm:mx-0">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#E63946] animate-ping" />
-                <span className="hidden sm:inline font-mono font-medium text-[#F5F5F0]">LIVE REEL</span>
+            <div className="w-full flex items-center justify-between px-2 sm:px-3 py-2.5 border-b border-[#2A2A2A]/80 bg-[#111111]/95 z-10 text-[10px] sm:text-xs tracking-widest text-[#6B7280] uppercase">
+              <div className="flex items-center gap-1.5 mx-auto sm:mx-0">
+                <span className="w-2 h-2 rounded-full bg-[#E63946] animate-ping" />
+                <span className="hidden sm:inline font-mono font-semibold text-[#F5F5F0]">LIVE REEL</span>
               </div>
               <button
                 onClick={() => setIsMinimized(true)}
-                className="p-1 hover:text-[#E63946] text-[#6B7280] transition-colors rounded"
+                className="p-1 hover:text-[#E63946] text-[#6B7280] transition-colors rounded hover:bg-[#2A2A2A]/50 cursor-pointer"
                 title="Minimize Art Reel"
                 aria-label="Minimize Art Reel"
               >
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M9 18l6-6-6-6" />
                 </svg>
               </button>
             </div>
 
             {/* Continuous Vertical Scrolling Gallery Track */}
-            <div className="w-full flex-1 overflow-hidden relative py-2">
+            <div className="w-full flex-1 overflow-hidden relative py-3">
               {/* Fade gradient masks for top and bottom edge */}
-              <div className="absolute top-0 inset-x-0 h-6 bg-gradient-to-b from-[#0A0A0A]/90 to-transparent z-10 pointer-events-none" />
-              <div className="absolute bottom-0 inset-x-0 h-6 bg-gradient-to-t from-[#0A0A0A]/90 to-transparent z-10 pointer-events-none" />
+              <div className="absolute top-0 inset-x-0 h-8 md:h-12 bg-gradient-to-b from-[#0A0A0A] to-transparent z-10 pointer-events-none" />
+              <div className="absolute bottom-0 inset-x-0 h-8 md:h-12 bg-gradient-to-t from-[#0A0A0A] to-transparent z-10 pointer-events-none" />
 
-              <div className="flex flex-col gap-2.5 sm:gap-3 items-center animate-vertical-roll px-1">
+              <div className="flex flex-col gap-3 sm:gap-4 items-center animate-vertical-roll px-1.5 sm:px-2">
                 {reelArtworks.map((artwork, idx) => (
                   <button
                     key={`${artwork.id}-${idx}`}
                     onClick={() => handleCardClick(artwork)}
-                    className="relative group/card flex-shrink-0 w-9 h-9 sm:w-11 sm:h-11 md:w-16 md:h-16 rounded-lg overflow-hidden border border-[#2A2A2A] hover:border-[#E63946] focus:border-[#E63946] focus:outline-none transition-all duration-300 shadow-md hover:scale-105 hover:z-20 cursor-pointer"
+                    className="relative group/card flex-shrink-0 w-13 h-13 sm:w-16 sm:h-16 md:w-22 md:h-24 lg:w-28 lg:h-32 rounded-xl overflow-hidden border border-[#2A2A2A] hover:border-[#E63946] focus:border-[#E63946] focus:outline-none transition-all duration-300 shadow-lg hover:scale-105 hover:z-20 cursor-pointer"
                   >
                     <Image
                       src={artwork.imageSrc}
                       alt={artwork.title}
                       fill
-                      sizes="(max-width: 640px) 36px, (max-width: 768px) 44px, 64px"
+                      sizes="(max-width: 640px) 52px, (max-width: 768px) 64px, (max-width: 1024px) 88px, 112px"
                       className="object-cover group-hover/card:scale-110 transition-transform duration-300"
                     />
 
                     {/* Desktop Hover Tooltip */}
-                    <div className="hidden lg:block absolute right-full top-1/2 -translate-y-1/2 mr-3 opacity-0 group-hover/card:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap bg-[#111111] border border-[#E63946]/40 px-2.5 py-1 rounded-md shadow-xl text-left">
-                      <p className="text-[11px] font-medium text-[#F5F5F0] leading-tight">{artwork.title}</p>
-                      <p className="text-[9px] text-[#E63946] uppercase font-mono tracking-wider">{artwork.category}</p>
+                    <div className="hidden lg:block absolute right-full top-1/2 -translate-y-1/2 mr-3 opacity-0 group-hover/card:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap bg-[#111111] border border-[#E63946]/50 px-3 py-1.5 rounded-lg shadow-2xl text-left">
+                      <p className="text-xs font-semibold text-[#F5F5F0] leading-tight">{artwork.title}</p>
+                      <p className="text-[10px] text-[#E63946] uppercase font-mono tracking-wider">{artwork.category}</p>
                     </div>
 
-                    {/* Subtle Overlay highlight */}
+                    {/* Overlay highlight */}
                     <div className="absolute inset-0 bg-[#E63946]/10 opacity-0 group-hover/card:opacity-100 transition-opacity duration-200" />
                   </button>
                 ))}
@@ -124,9 +124,9 @@ export default function VerticalPictureRoll() {
             </div>
 
             {/* Reel Footer Indicator */}
-            <div className="w-full py-1.5 text-center border-t border-[#2A2A2A]/80 bg-[#111111]/90 z-10">
-              <span className="text-[8px] sm:text-[9px] text-[#6B7280] font-mono tracking-tighter">
-                {artworks.length} WORKS
+            <div className="w-full py-2 text-center border-t border-[#2A2A2A]/80 bg-[#111111]/95 z-10">
+              <span className="text-[9px] sm:text-[10px] text-[#888888] font-mono font-medium tracking-wider">
+                {artworks.length} ARTWORKS
               </span>
             </div>
           </motion.div>
