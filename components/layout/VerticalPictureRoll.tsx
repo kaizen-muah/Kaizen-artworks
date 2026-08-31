@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { artworks } from '@/data/artworks';
@@ -10,6 +10,13 @@ import ArtworkModal from '@/components/sections/ArtworkModal';
 export default function VerticalPictureRoll() {
   const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
   const [isMinimized, setIsMinimized] = useState(false);
+
+  // Auto-minimize on mobile screens (<768px) on mount so it doesn't obscure content
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      setIsMinimized(true);
+    }
+  }, []);
 
   // Duplicate artworks to make seamless infinite loop
   const reelArtworks = [...artworks, ...artworks];
@@ -36,7 +43,7 @@ export default function VerticalPictureRoll() {
     <>
       {/* Container - Pinned to right side of viewport */}
       <aside
-        className="fixed right-2 sm:right-3 md:right-5 top-20 sm:top-24 bottom-6 z-30 pointer-events-none flex flex-col items-end justify-center"
+        className="fixed right-2 sm:right-3 md:right-5 bottom-4 sm:bottom-6 md:top-24 md:bottom-6 z-40 pointer-events-none flex flex-col items-end justify-end md:justify-center max-h-[70vh] md:max-h-none"
         aria-label="Artworks Showcase Reel"
       >
         {isMinimized ? (
@@ -69,7 +76,7 @@ export default function VerticalPictureRoll() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="pointer-events-auto relative h-full w-16 sm:w-20 md:w-28 lg:w-36 bg-[#0A0A0A]/85 hover:bg-[#0A0A0A]/98 backdrop-blur-md border border-[#2A2A2A] hover:border-[#E63946]/50 rounded-2xl flex flex-col items-center overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.9)] transition-all duration-300 group/reel"
+            className="pointer-events-auto relative h-full max-h-[60vh] md:max-h-full w-14 sm:w-18 md:w-28 lg:w-36 bg-[#0A0A0A]/90 hover:bg-[#0A0A0A]/98 backdrop-blur-md border border-[#2A2A2A] hover:border-[#E63946]/50 rounded-2xl flex flex-col items-center overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.9)] transition-all duration-300 group/reel"
           >
             {/* Reel Header / Control Bar */}
             <div className="w-full flex items-center justify-between px-2 sm:px-3 py-2.5 border-b border-[#2A2A2A]/80 bg-[#111111]/95 z-10 text-[10px] sm:text-xs tracking-widest text-[#6B7280] uppercase">
