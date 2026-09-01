@@ -1,24 +1,18 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { motion, useMotionValue } from 'framer-motion';
 
 export default function CustomCursor() {
   const [isHoveredRed, setIsHoveredRed] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
-  // Motion values for smooth hardware-accelerated tracking (0 React re-renders on mousemove)
+  // Direct 1:1 motion values for instant tracking with zero delay
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
-  // Smooth physics spring
-  const springConfig = { damping: 28, stiffness: 450, mass: 0.2 };
-  const smoothX = useSpring(cursorX, springConfig);
-  const smoothY = useSpring(cursorY, springConfig);
-
   useEffect(() => {
-    // Only enable on non-touch desktop devices
     if (typeof window === 'undefined' || matchMedia('(pointer: coarse)').matches) {
       return;
     }
@@ -33,7 +27,6 @@ export default function CustomCursor() {
     const handleMouseDown = () => setIsClicked(true);
     const handleMouseUp = () => setIsClicked(false);
 
-    // Detect if hovering over a red element or interactive element that needs white cursor
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null;
       if (!target) return;
@@ -42,7 +35,6 @@ export default function CustomCursor() {
         '[data-cursor="white"], .cursor-white-hover, h1, button, a, [role="button"]'
       );
 
-      // Check if target or parent turns red on hover or is a KAIZEN letter/button
       const isRedBackgroundOrLetter =
         isWhiteTarget ||
         target.tagName === 'SPAN' ||
@@ -52,7 +44,7 @@ export default function CustomCursor() {
       setIsHoveredRed(isRedBackgroundOrLetter);
     };
 
-    window.addEventListener('mousemove', moveCursor);
+    window.addEventListener('mousemove', moveCursor, { passive: true });
     window.addEventListener('mousedown', handleMouseDown);
     window.addEventListener('mouseup', handleMouseUp);
     window.addEventListener('mouseover', handleMouseOver);
@@ -69,10 +61,10 @@ export default function CustomCursor() {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 pointer-events-none z-[99999] mix-blend-difference"
+      className="fixed top-0 left-0 pointer-events-none z-[99999]"
       style={{
-        x: smoothX,
-        y: smoothY,
+        x: cursorX,
+        y: cursorY,
         translateX: '-2px',
         translateY: '-22px',
       }}
@@ -82,10 +74,9 @@ export default function CustomCursor() {
           scale: isClicked ? 0.85 : isHoveredRed ? 1.3 : 1,
           rotate: isHoveredRed ? 12 : 0,
         }}
-        transition={{ duration: 0.15, ease: 'easeOut' }}
+        transition={{ duration: 0.1, ease: 'easeOut' }}
         className="relative flex items-center justify-center"
       >
-        {/* Interactive Pencil SVG Cursor */}
         <svg
           width="26"
           height="26"
@@ -95,12 +86,11 @@ export default function CustomCursor() {
           strokeWidth="2.2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="transition-colors duration-200 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+          className="transition-colors duration-150 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
         >
           <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
         </svg>
 
-        {/* Glow effect on hover */}
         {isHoveredRed && (
           <motion.span
             initial={{ scale: 0.5, opacity: 0 }}
