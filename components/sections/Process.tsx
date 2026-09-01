@@ -161,13 +161,13 @@ export default function Process() {
     <section
       ref={containerRef}
       id="process"
-      className="section-padding content-max relative overflow-hidden"
+      className="section-padding content-max relative overflow-hidden bg-white"
       aria-label="Artistic process"
     >
       {/* Header */}
-      <div className="mb-20">
-        <p className="label-caps text-[#E63946] mb-3">How it works</p>
-        <h2 className="display-text text-[clamp(2.5rem,6vw,5rem)] text-[#F5F5F0]">
+      <div className="mb-20 text-center">
+        <p className="label-caps text-emerald-600 mb-3">How it works</p>
+        <h2 className="display-text text-[clamp(2.5rem,6vw,5rem)] text-gray-900">
           The Process
         </h2>
       </div>
@@ -178,7 +178,7 @@ export default function Process() {
           {/* Background guide path */}
           <path
             d="M 50,50 C 200,90 300,10 500,50 C 700,90 800,10 950,50 C 1050,75 1100,50 1150,50"
-            stroke="rgba(42, 42, 42, 0.25)"
+            stroke="rgba(16, 185, 129, 0.2)"
             strokeWidth="2"
             strokeDasharray="6 6"
           />
@@ -186,7 +186,7 @@ export default function Process() {
           <path
             ref={pathRef}
             d="M 50,50 C 200,90 300,10 500,50 C 700,90 800,10 950,50 C 1050,75 1100,50 1150,50"
-            stroke="#E63946"
+            stroke="#10b981"
             strokeWidth="2.5"
             strokeLinecap="round"
           />
@@ -195,7 +195,7 @@ export default function Process() {
         {/* Floating pencil tip that follows the path */}
         <div
           ref={pencilRef}
-          className="absolute w-6 h-6 -ml-3 -mt-3 text-[#E63946]"
+          className="absolute w-6 h-6 -ml-3 -mt-3 text-emerald-600"
           style={{ transformOrigin: 'center' }}
         >
           <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full rotate-45 transform">
@@ -210,7 +210,7 @@ export default function Process() {
           {/* Guide path */}
           <path
             d="M 10,10 Q 40,150 10,300 T 10,600 T 10,900 T 10,1200"
-            stroke="rgba(42, 42, 42, 0.25)"
+            stroke="rgba(16, 185, 129, 0.2)"
             strokeWidth="2"
             strokeDasharray="6 6"
           />
@@ -218,7 +218,7 @@ export default function Process() {
           <path
             ref={pathMobileRef}
             d="M 10,10 Q 40,150 10,300 T 10,600 T 10,900 T 10,1200"
-            stroke="#E63946"
+            stroke="#10b981"
             strokeWidth="2.5"
             strokeLinecap="round"
           />
@@ -227,7 +227,7 @@ export default function Process() {
         {/* Pencil tip (mobile) */}
         <div
           ref={pencilMobileRef}
-          className="absolute w-6 h-6 -ml-3 -mt-3 text-[#E63946]"
+          className="absolute w-6 h-6 -ml-3 -mt-3 text-emerald-600"
           style={{ transformOrigin: 'center' }}
         >
           <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full rotate-45 transform">
@@ -239,35 +239,35 @@ export default function Process() {
       {/* Steps Grid */}
       <div
         ref={stepsRef}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-[#2A2A2A] relative z-20"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-gray-100 relative z-20 border border-gray-100 shadow-sm rounded-sm"
       >
         {steps.map((step) => (
           <div
             key={step.number}
-            className="process-card bg-[#0A0A0A] p-8 flex flex-col gap-6 group hover:bg-[#111111] transition-colors duration-300 relative overflow-hidden"
+            className="process-card bg-white p-8 flex flex-col gap-6 group hover:bg-gray-50 transition-colors duration-300 relative overflow-hidden"
           >
             {/* Number + icon */}
             <div className="flex items-start justify-between">
               <span
-                className="display-text text-[4rem] text-[#1A1A1A] leading-none group-hover:text-[#2A2A2A] transition-colors duration-300 select-none"
+                className="display-text text-[4rem] text-gray-100 group-hover:text-emerald-100 transition-colors duration-300 select-none leading-none"
               >
                 {step.number}
               </span>
-              <span className="text-[#E63946] mt-1">{step.icon}</span>
+              <span className="text-emerald-500 mt-1">{step.icon}</span>
             </div>
 
             {/* Title */}
-            <h3 className="text-[#F5F5F0] font-medium text-lg relative z-10">{step.title}</h3>
+            <h3 className="text-gray-900 font-medium text-lg relative z-10">{step.title}</h3>
 
             {/* Description */}
-            <p className="text-[#6B7280] text-sm leading-relaxed relative z-10">{step.description}</p>
+            <p className="text-gray-600 text-sm leading-relaxed relative z-10">{step.description}</p>
           </div>
         ))}
       </div>
 
       {/* Bottom note */}
-      <p className="mt-12 text-center text-[#6B7280] text-sm">
-        Typical turnaround: <span className="text-[#F5F5F0]">3–21 days</span> depending on complexity.
+      <p className="mt-12 text-center text-gray-500 text-sm">
+        Typical turnaround: <span className="text-gray-900 font-medium">3–21 days</span> depending on complexity.
         Rush orders available — just ask.
       </p>
     </section>

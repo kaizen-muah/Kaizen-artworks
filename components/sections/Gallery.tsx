@@ -52,7 +52,7 @@ export default function Gallery() {
     <section
       ref={galleryRef}
       id="gallery"
-      className="section-padding content-max relative"
+      className="section-padding content-max relative bg-white"
       aria-label="Portfolio gallery"
     >
       {/* Header */}
@@ -63,9 +63,9 @@ export default function Gallery() {
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         className="mb-12"
       >
-        <p className="label-caps text-[#E63946] mb-3">Selected Works</p>
+        <p className="label-caps text-emerald-600 mb-3">Selected Works</p>
         <h2
-          className="display-text text-[clamp(2.5rem,6vw,5rem)] text-[#F5F5F0]"
+          className="display-text text-[clamp(2.5rem,6vw,5rem)] text-gray-900"
         >
           Gallery
         </h2>
@@ -85,14 +85,14 @@ export default function Gallery() {
             aria-label={`Filter by ${label}`}
             className={`flex items-center gap-2 px-4 py-2 text-xs font-medium tracking-widest uppercase border transition-all duration-200 ${
               activeCategory === value
-                ? 'border-[#E63946] text-[#F5F5F0] bg-[#E63946]/10'
-                : 'border-[#2A2A2A] text-[#6B7280] hover:border-[#6B7280] hover:text-[#F5F5F0]'
+                ? 'border-emerald-600 text-emerald-700 bg-emerald-50'
+                : 'border-gray-200 text-gray-500 hover:border-gray-400 hover:text-gray-900'
             }`}
           >
             {label}
             <span
               className={`inline-flex items-center justify-center w-4 h-4 text-[10px] rounded-full ${
-                activeCategory === value ? 'bg-[#E63946] text-white' : 'bg-[#2A2A2A] text-[#6B7280]'
+                activeCategory === value ? 'bg-emerald-600 text-white' : 'bg-gray-100 text-gray-500'
               }`}
             >
               {getCategoryCount(value)}
@@ -117,7 +117,7 @@ export default function Gallery() {
                 layout
                 variants={slideUpVariants}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="gallery-card break-inside-avoid mb-3 md:mb-4 cursor-pointer group relative overflow-hidden bg-[#111111] border border-[#2A2A2A] hover:border-[#E63946]/40 transition-colors duration-300"
+                className="gallery-card break-inside-avoid mb-3 md:mb-4 cursor-pointer group relative overflow-hidden bg-white border border-gray-200 hover:border-emerald-500/40 transition-colors duration-300"
                 onClick={() => handleCardClick(artwork)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
@@ -144,14 +144,14 @@ export default function Gallery() {
                 </div>
 
                 {/* Hover overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
-                  <p className="label-caps text-[#E63946] text-[10px] mb-1">{artwork.category}</p>
-                  <h3 className="text-[#F5F5F0] font-medium text-sm mb-1">{artwork.title}</h3>
-                  <p className="text-[#6B7280] text-xs">{artwork.timeTaken}</p>
+                <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+                  <p className="label-caps text-emerald-600 text-[10px] mb-1">{artwork.category}</p>
+                  <h3 className="text-gray-900 font-medium text-sm mb-1">{artwork.title}</h3>
+                  <p className="text-gray-600 text-xs">{artwork.timeTaken}</p>
                   {artwork.price && (
-                    <p className="text-[#E63946] text-xs font-medium mt-1">{artwork.price}</p>
+                    <p className="text-emerald-600 text-xs font-medium mt-1">{artwork.price}</p>
                   )}
-                  <div className="mt-3 flex items-center gap-1 text-[#F5F5F0] text-xs font-medium">
+                  <div className="mt-3 flex items-center gap-1 text-gray-900 text-xs font-medium">
                     <span>View</span>
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                       <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
