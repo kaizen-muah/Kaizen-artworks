@@ -62,14 +62,14 @@ export default function Navbar() {
         transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? 'bg-[#0A0A0A]/90 backdrop-blur-md border-b border-[#2A2A2A]'
-            : 'bg-transparent'
+            ? 'bg-emerald-700/95 backdrop-blur-md border-b border-emerald-600'
+            : 'bg-emerald-600'
         }`}
       >
         {/* Animated Scroll Progress Bar */}
-        <div className="absolute bottom-0 left-0 right-0 h-[2.5px] md:h-[3px] bg-[#1A1A1A]/80 overflow-hidden pointer-events-none">
+        <div className="absolute bottom-0 left-0 right-0 h-[2.5px] md:h-[3px] bg-emerald-800/80 overflow-hidden pointer-events-none">
           <motion.div
-            className="h-full bg-gradient-to-r from-[#E63946] via-[#FF6B6B] to-[#E63946] shadow-[0_0_10px_rgba(230,57,70,0.9)]"
+            className="h-full bg-gradient-to-r from-white via-emerald-100 to-white shadow-[0_0_10px_rgba(255,255,255,0.5)]"
             style={{ scaleX, transformOrigin: '0%' }}
           />
         </div>
@@ -80,7 +80,7 @@ export default function Navbar() {
           {/* Logo */}
           <button
             onClick={() => scrollToSection('hero')}
-            className="text-2xl font-light tracking-[0.25em] text-[#F5F5F0] hover:text-[#E63946] transition-colors duration-200"
+            className="text-2xl font-light tracking-[0.25em] text-white hover:text-emerald-100 transition-colors duration-200"
             style={{ fontFamily: 'var(--font-cormorant)' }}
             aria-label="Kaizen — back to top"
           >
@@ -95,8 +95,8 @@ export default function Navbar() {
                   onClick={() => handleNavClick(href)}
                   className={`label-caps text-xs transition-colors duration-200 pb-0.5 border-b border-transparent ${
                     activeSection === href
-                      ? 'text-[#F5F5F0] border-[#E63946]'
-                      : 'text-[#6B7280] hover:text-[#F5F5F0]'
+                      ? 'text-white border-white'
+                      : 'text-emerald-100 hover:text-white'
                   }`}
                 >
                   {label}
@@ -108,7 +108,7 @@ export default function Navbar() {
           {/* Desktop CTA */}
           <button
             onClick={() => handleNavClick('contact')}
-            className="hidden md:flex items-center gap-2 px-5 py-2 border border-[#E63946] text-[#E63946] text-xs font-medium tracking-widest uppercase hover:bg-[#E63946] hover:text-[#F5F5F0] transition-all duration-200"
+            className="hidden md:flex items-center gap-2 px-5 py-2 border border-white text-white text-xs font-medium tracking-widest uppercase hover:bg-white hover:text-emerald-700 transition-all duration-200"
           >
             Commission Me
           </button>
@@ -122,17 +122,17 @@ export default function Navbar() {
           >
             <motion.span
               animate={isMenuOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
-              className="block w-6 h-px bg-[#F5F5F0] origin-center"
+              className="block w-6 h-px bg-white origin-center"
               transition={{ duration: 0.3 }}
             />
             <motion.span
               animate={isMenuOpen ? { opacity: 0 } : { opacity: 1 }}
-              className="block w-6 h-px bg-[#F5F5F0]"
+              className="block w-6 h-px bg-white"
               transition={{ duration: 0.3 }}
             />
             <motion.span
               animate={isMenuOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
-              className="block w-6 h-px bg-[#F5F5F0] origin-center"
+              className="block w-6 h-px bg-white origin-center"
               transition={{ duration: 0.3 }}
             />
           </button>
@@ -148,7 +148,7 @@ export default function Navbar() {
             animate={{ opacity: 1, clipPath: 'inset(0 0 0% 0)' }}
             exit={{ opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-40 bg-[#0A0A0A] flex flex-col items-center justify-center gap-8"
+            className="fixed inset-0 z-40 bg-emerald-700 flex flex-col items-center justify-center gap-8"
           >
             {navLinks.map(({ label, href }, i) => (
               <motion.button
@@ -157,7 +157,7 @@ export default function Navbar() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.05 * i + 0.1, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 onClick={() => handleNavClick(href)}
-                className="text-4xl font-light text-[#F5F5F0] hover:text-[#E63946] transition-colors duration-200"
+                className="text-4xl font-light text-white hover:text-emerald-100 transition-colors duration-200"
                 style={{ fontFamily: 'var(--font-cormorant)' }}
               >
                 {label}
@@ -168,7 +168,7 @@ export default function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.5 }}
               onClick={() => handleNavClick('contact')}
-              className="mt-6 px-8 py-3 border border-[#E63946] text-[#E63946] text-sm font-medium tracking-widest uppercase"
+              className="mt-6 px-8 py-3 border border-white text-white text-sm font-medium tracking-widest uppercase hover:bg-white hover:text-emerald-700 transition-all duration-200"
             >
               Commission Me
             </motion.button>
