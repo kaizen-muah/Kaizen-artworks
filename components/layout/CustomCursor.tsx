@@ -1,85 +1,115 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { useMousePosition } from '@/hooks/useMousePosition';
-import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { useEffect, useState } from 'react';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export default function CustomCursor() {
-  const isDesktop = useMediaQuery('(pointer: fine)');
-  const dotRef = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
-  const [isExpanded, setIsExpanded] = useState(false);
-  useMousePosition();
+  const [isHoveredRed, setIsHoveredRed] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Motion values for smooth hardware-accelerated tracking (0 React re-renders on mousemove)
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+
+  // Smooth physics spring
+  const springConfig = { damping: 28, stiffness: 450, mass: 0.2 };
+  const smoothX = useSpring(cursorX, springConfig);
+  const smoothY = useSpring(cursorY, springConfig);
 
   useEffect(() => {
-    if (!isDesktop) return;
+    // Only enable on non-touch desktop devices
+    if (typeof window === 'undefined' || matchMedia('(pointer: coarse)').matches) {
+      return;
+    }
 
-    let rafId: number;
-    let dotX = 0;
-    let dotY = 0;
-    let ringX = 0;
-    let ringY = 0;
-    let targetX = 0;
-    let targetY = 0;
+    setIsVisible(true);
 
-    const onMouseMove = (e: MouseEvent): void => {
-      targetX = e.clientX;
-      targetY = e.clientY;
+    const moveCursor = (e: MouseEvent) => {
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
     };
 
-    const animate = (): void => {
-      dotX = targetX;
-      dotY = targetY;
-      ringX += (targetX - ringX) * 0.12;
-      ringY += (targetY - ringY) * 0.12;
+    const handleMouseDown = () => setIsClicked(true);
+    const handleMouseUp = () => setIsClicked(false);
 
-      if (dotRef.current) {
-        dotRef.current.style.transform = `translate(${dotX - 4}px, ${dotY - 4}px)`;
-      }
-      if (ringRef.current) {
-        ringRef.current.style.transform = `translate(${ringX - 18}px, ${ringY - 18}px)`;
-      }
+    // Detect if hovering over a red element or interactive element that needs white cursor
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
 
-      rafId = requestAnimationFrame(animate);
+      const isWhiteTarget = !!target.closest(
+        '[data-cursor="white"], .cursor-white-hover, h1, button, a, [role="button"]'
+      );
+
+      // Check if target or parent turns red on hover or is a KAIZEN letter/button
+      const isRedBackgroundOrLetter =
+        isWhiteTarget ||
+        target.tagName === 'SPAN' ||
+        target.innerText === 'KAIZEN' ||
+        target.innerText?.includes('VIEW GALLERY');
+
+      setIsHoveredRed(isRedBackgroundOrLetter);
     };
 
-    const onMouseOver = (e: MouseEvent): void => {
-      const target = e.target as HTMLElement;
-      const isInteractive = target.closest('a, button, [role="button"], input, textarea, select, label');
-      setIsExpanded(!!isInteractive);
-    };
-
-    window.addEventListener('mousemove', onMouseMove, { passive: true });
-    window.addEventListener('mouseover', onMouseOver, { passive: true });
-    rafId = requestAnimationFrame(animate);
+    window.addEventListener('mousemove', moveCursor);
+    window.addEventListener('mousedown', handleMouseDown);
+    window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('mouseover', handleMouseOver);
 
     return () => {
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('mouseover', onMouseOver);
-      cancelAnimationFrame(rafId);
+      window.removeEventListener('mousemove', moveCursor);
+      window.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('mouseover', handleMouseOver);
     };
-  }, [isDesktop]);
+  }, [cursorX, cursorY]);
 
-  if (!isDesktop) return null;
+  if (!isVisible) return null;
 
   return (
-    <>
-      <div
-        ref={dotRef}
-        className={`fixed top-0 left-0 w-2 h-2 rounded-full pointer-events-none z-[9999] transition-colors duration-200 ${
-          isExpanded ? 'bg-[#E63946]' : 'bg-[#F5F5F0]'
-        }`}
-        aria-hidden="true"
-      />
-      <div
-        ref={ringRef}
-        className={`fixed top-0 left-0 w-9 h-9 rounded-full border pointer-events-none z-[9998] transition-all duration-300 ${
-          isExpanded
-            ? 'w-14 h-14 border-[#E63946]/50'
-            : 'border-[#F5F5F0]/30'
-        }`}
-        aria-hidden="true"
-      />
-    </>
+    <motion.div
+      className="fixed top-0 left-0 pointer-events-none z-[99999] mix-blend-difference"
+      style={{
+        x: smoothX,
+        y: smoothY,
+        translateX: '-2px',
+        translateY: '-22px',
+      }}
+    >
+      <motion.div
+        animate={{
+          scale: isClicked ? 0.85 : isHoveredRed ? 1.3 : 1,
+          rotate: isHoveredRed ? 12 : 0,
+        }}
+        transition={{ duration: 0.15, ease: 'easeOut' }}
+        className="relative flex items-center justify-center"
+      >
+        {/* Interactive Pencil SVG Cursor */}
+        <svg
+          width="26"
+          height="26"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke={isHoveredRed ? '#FFFFFF' : '#E63946'}
+          strokeWidth="2.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="transition-colors duration-200 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+        >
+          <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
+        </svg>
+
+        {/* Glow effect on hover */}
+        {isHoveredRed && (
+          <motion.span
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1.4, opacity: 0.4 }}
+            exit={{ scale: 0.5, opacity: 0 }}
+            className="absolute inset-0 rounded-full bg-white blur-md -z-10"
+          />
+        )}
+      </motion.div>
+    </motion.div>
   );
 }

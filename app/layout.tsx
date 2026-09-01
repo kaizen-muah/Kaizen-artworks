@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Cormorant_Garamond, Inter } from 'next/font/google';
 import './globals.css';
 import SmoothScroll from '@/components/layout/SmoothScroll';
+import CustomCursor from '@/components/layout/CustomCursor';
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -69,6 +70,7 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-[#0A0A0A] text-[#F5F5F0] antialiased">
+        <CustomCursor />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

@@ -74,17 +74,11 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#0A0A0A]"
       aria-label="Hero section"
     >
-      {/* Dark base */}
+      {/* Clean Dark Base */}
       <div className="absolute inset-0 bg-[#0A0A0A]" />
-
-      {/* Pure CSS 5-point perspective grid — zero JS, zero CPU */}
-      <div className="absolute inset-0 hero-grid pointer-events-none" aria-hidden="true" />
-
-      {/* Red glow orb — CSS animation only */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full hero-orb pointer-events-none" aria-hidden="true" />
 
       {/* Parallax wrapper on scroll only */}
       <motion.div
@@ -105,6 +99,7 @@ export default function Hero() {
         <h1
           className="display-text text-[clamp(3rem,13vw,13rem)] text-[#F5F5F0] leading-none tracking-[-0.03em] mb-2 flex flex-nowrap"
           aria-label="KAIZEN"
+          data-cursor="white"
         >
           {LETTERS.map((letter, i) => (
             <JiggleLetter key={letter + i} letter={letter} index={i} />
@@ -139,6 +134,7 @@ export default function Hero() {
         >
           <button
             onClick={() => scrollToSection('gallery')}
+            data-cursor="white"
             className="px-8 py-4 bg-[#F5F5F0] text-[#0A0A0A] text-xs font-medium tracking-widest uppercase transition-all duration-300 hover:bg-[#E63946] hover:text-[#F5F5F0] cursor-white-hover"
           >
             View Gallery
@@ -150,21 +146,6 @@ export default function Hero() {
             Commission Me
           </button>
         </motion.div>
-      </motion.div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 0.8 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-      >
-        <span className="label-caps text-[10px]">Scroll</span>
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-          className="w-px h-10 bg-gradient-to-b from-[#E63946] to-transparent"
-        />
       </motion.div>
 
       {/* Decorative corner text */}
