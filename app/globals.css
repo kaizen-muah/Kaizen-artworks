@@ -129,33 +129,7 @@ body {
   }
 }
 
-/* ─── Hero: Pure CSS 5-point perspective grid ────── */
-/* Uses conic-gradient + radial lines — zero JS, GPU composited */
-.hero-grid {
-  background-image:
-    /* 18 radial spokes from center — simulates 5-point vanishing lines */
-    repeating-conic-gradient(
-      from 0deg at 50% 50%,
-      rgba(245,245,240,0.045) 0deg,
-      transparent 0.6deg,
-      transparent 20deg
-    ),
-    /* Concentric rings for fisheye curvature */
-    radial-gradient(ellipse 20% 20% at 50% 50%, transparent 97%, rgba(245,245,240,0.04) 100%),
-    radial-gradient(ellipse 40% 38% at 50% 50%, transparent 97%, rgba(245,245,240,0.04) 100%),
-    radial-gradient(ellipse 62% 58% at 50% 50%, transparent 97%, rgba(245,245,240,0.04) 100%),
-    radial-gradient(ellipse 86% 80% at 50% 50%, transparent 97%, rgba(245,245,240,0.04) 100%),
-    radial-gradient(ellipse 115% 108% at 50% 50%, transparent 97%, rgba(245,245,240,0.035) 100%),
-    radial-gradient(ellipse 150% 140% at 50% 50%, transparent 97%, rgba(245,245,240,0.03) 100%);
-  opacity: 1;
-}
 
-/* ─── Hero orb — CSS animation only ─────────────── */
-.hero-orb {
-  background: radial-gradient(circle, rgba(230,57,70,0.18) 0%, rgba(230,57,70,0.05) 50%, transparent 75%);
-  animation: orb-float 7s ease-in-out infinite;
-  will-change: transform, opacity;
-}
 
 /* ─── Custom cursor ──────────────────────────────── */
 .cursor-dot {
