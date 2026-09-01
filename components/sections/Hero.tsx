@@ -59,8 +59,8 @@ function JiggleLetter({ letter, index }: { letter: string; index: number }) {
         style={{
           display: 'inline-block',
           willChange: 'transform',
-          cursor: 'default',
         }}
+        className="cursor-white-hover"
       >
         {letter}
       </motion.span>
@@ -139,7 +139,7 @@ export default function Hero() {
         >
           <button
             onClick={() => scrollToSection('gallery')}
-            className="px-8 py-4 bg-[#F5F5F0] text-[#0A0A0A] text-xs font-medium tracking-widest uppercase transition-all duration-300 hover:bg-[#E63946] hover:text-[#F5F5F0]"
+            className="px-8 py-4 bg-[#F5F5F0] text-[#0A0A0A] text-xs font-medium tracking-widest uppercase transition-all duration-300 hover:bg-[#E63946] hover:text-[#F5F5F0] cursor-white-hover"
           >
             View Gallery
           </button>
