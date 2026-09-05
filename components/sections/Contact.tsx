@@ -44,7 +44,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="section-padding content-max bg-gray-50"
+      className="section-padding content-max bg-transparent"
       aria-label="Contact and Commission Form"
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
@@ -94,7 +94,7 @@ export default function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="bg-white border border-gray-200 p-6 md:p-10 relative overflow-hidden shadow-sm"
+          className="bg-[#FDD7B9] border border-stone-300/80 p-6 md:p-10 relative overflow-hidden shadow-[0_8px_30px_-5px_rgba(0,0,0,0.15)] rounded-xs"
         >
           <AnimatePresence mode="wait">
             {submitStatus === 'success' ? (
@@ -235,8 +235,8 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`mt-4 w-full py-4 bg-emerald-600 text-white text-xs font-medium tracking-widest uppercase transition-all duration-200 flex justify-center items-center h-[50px] ${
-                    isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:bg-emerald-700'
+                  className={`mt-4 w-full py-4 bg-emerald-700 text-white text-xs font-semibold tracking-widest uppercase transition-all duration-200 flex justify-center items-center h-[50px] shadow-sm rounded-xs ${
+                    isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:bg-emerald-800'
                   }`}
                 >
                   {isSubmitting ? (

@@ -29,9 +29,8 @@ export default function Testimonials() {
   return (
     <section
       id="testimonials"
-      className="section-padding"
+      className="section-padding bg-transparent"
       aria-label="Client testimonials"
-      style={{ background: 'linear-gradient(180deg, #ffffff 0%, #f9fafb 50%, #ffffff 100%)' }}
     >
       <div className="content-max">
         {/* Header */}
@@ -60,11 +59,11 @@ export default function Testimonials() {
             <motion.article
               key={t.id}
               variants={slideUpVariants}
-              className="flex flex-col gap-6 p-8 bg-white border border-gray-200 hover:border-emerald-500/30 hover:shadow-md transition-all duration-300"
+              className="flex flex-col gap-6 p-8 bg-[#FDD7B9] border border-stone-300/80 hover:border-emerald-600/50 shadow-[0_6px_25px_-5px_rgba(0,0,0,0.14)] hover:shadow-[0_12px_30px_-5px_rgba(0,0,0,0.22)] transition-all duration-300 rounded-xs"
             >
               {/* Quote mark */}
               <span
-                className="display-text text-[5rem] text-gray-100 leading-none select-none"
+                className="display-text text-[5rem] text-stone-800/15 leading-none select-none"
                 aria-hidden="true"
               >
                 &quot;
@@ -72,21 +71,21 @@ export default function Testimonials() {
 
               <StarRating rating={t.rating} />
 
-              <blockquote className="text-gray-700 text-sm leading-relaxed font-light flex-1">
+              <blockquote className="text-stone-800 text-sm leading-relaxed font-light flex-1">
                 &ldquo;{t.quote}&rdquo;
               </blockquote>
 
-              <footer className="border-t border-gray-100 pt-5 flex items-center gap-4">
+              <footer className="border-t border-stone-400/30 pt-5 flex items-center gap-4">
                 {/* Avatar */}
                 <div
-                  className="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center flex-shrink-0"
+                  className="w-10 h-10 rounded-full bg-stone-900/10 border border-stone-400/40 flex items-center justify-center flex-shrink-0"
                   aria-hidden="true"
                 >
-                  <span className="text-emerald-600 text-xs font-medium">{t.avatarInitials}</span>
+                  <span className="text-emerald-800 text-xs font-bold">{t.avatarInitials}</span>
                 </div>
                 <div>
-                  <p className="text-gray-900 text-sm font-medium">{t.clientName}</p>
-                  <p className="text-gray-500 text-xs mt-0.5">{t.projectType}</p>
+                  <p className="text-stone-900 text-sm font-semibold">{t.clientName}</p>
+                  <p className="text-stone-700 text-xs mt-0.5">{t.projectType}</p>
                 </div>
               </footer>
             </motion.article>

@@ -6,7 +6,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-gray-200 bg-white pt-16 pb-8" aria-label="Site footer">
+    <footer className="border-t border-stone-300/80 bg-white/75 backdrop-blur-md pt-16 pb-8" aria-label="Site footer">
       <div className="content-max px-6 md:px-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 mb-16">
           {/* Brand */}

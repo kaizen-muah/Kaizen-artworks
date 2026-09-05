@@ -27,16 +27,14 @@ function JiggleLetter({ letter, index }: { letter: string; index: number }) {
         animate={
           hovered
             ? {
-                scale: 1.38,
-                y: -18,
-                rotate: [0, -9, 9, -6, 6, -3, 3, 0],
-                color: '#10b981', // emerald-500
+                scale: 1.25,
+                y: -14,
+                rotate: [0, -6, 6, -4, 4, -2, 2, 0],
               }
             : {
                 scale: 1,
                 y: 0,
                 rotate: 0,
-                color: '#111827', // near-black on white bg
               }
         }
         transition={
@@ -45,15 +43,14 @@ function JiggleLetter({ letter, index }: { letter: string; index: number }) {
                 scale: { duration: 0.3, ease: [0.34, 1.56, 0.64, 1] },
                 y: { duration: 0.3, ease: [0.34, 1.56, 0.64, 1] },
                 rotate: { duration: 0.45, ease: 'easeOut' },
-                color: { duration: 0.2 },
               }
             : {
                 scale: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
                 y: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
                 rotate: { duration: 0.2 },
-                color: { duration: 0.25 },
               }
         }
+        className="pencil-4b pencil-4b-textured select-none cursor-pointer"
         style={{
           display: 'inline-block',
           willChange: 'transform',
@@ -71,15 +68,37 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-white"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
       aria-label="Hero section"
     >
-      {/* Clean White Base */}
-      <div className="absolute inset-0 bg-white" />
+      {/* SVG filter definition for 4B pencil graphite rough edges & tooth bite */}
+      <svg className="absolute w-0 h-0 pointer-events-none opacity-0" aria-hidden="true">
+        <defs>
+          <filter id="pencil-texture" x="-15%" y="-15%" width="130%" height="130%">
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.65"
+              numOctaves="4"
+              result="noise"
+            />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="noise"
+              scale="2.2"
+              xChannelSelector="R"
+              yChannelSelector="G"
+              result="displaced"
+            />
+            <feMerge>
+              <feMergeNode in="displaced" />
+            </feMerge>
+          </filter>
+        </defs>
+      </svg>
 
       {/* Subtle emerald radial glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(16,185,129,0.07) 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(circle, rgba(16,185,129,0.08) 0%, transparent 70%)' }}
         aria-hidden="true"
       />
 
@@ -93,14 +112,14 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="label-caps mb-6 text-emerald-600"
+          className="label-caps mb-6 text-emerald-700 font-semibold tracking-[0.22em]"
         >
           Anime &amp; Manga Illustration
         </motion.p>
 
-        {/* Per-letter KAIZEN */}
+        {/* Per-letter 4B Pencil KAIZEN */}
         <h1
-          className="display-text text-[clamp(3rem,13vw,13rem)] text-gray-900 leading-none tracking-[-0.03em] mb-2 flex flex-nowrap"
+          className="display-text text-[clamp(3.5rem,14vw,13.5rem)] leading-none tracking-[-0.02em] mb-2 flex flex-nowrap"
           aria-label="KAIZEN"
           data-cursor="white"
         >
@@ -109,12 +128,12 @@ export default function Hero() {
           ))}
         </h1>
 
-        {/* Emerald accent line */}
+        {/* Emerald accent line with subtle hand-drawn sketch feel */}
         <motion.div
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 0.8, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="h-[2px] bg-emerald-500 mb-8"
+          className="h-[2px] bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 rounded-full mb-8 shadow-sm"
           style={{ width: 'clamp(120px, 20vw, 300px)', transformOrigin: 'left' }}
         />
 
@@ -123,7 +142,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.1, ease: [0.16, 1, 0.3, 1] }}
-          className="text-gray-500 text-base md:text-lg font-light max-w-md leading-relaxed mb-12"
+          className="text-stone-700 text-base md:text-lg font-light max-w-md leading-relaxed mb-12"
         >
           Every line tells a story.<br />Every commission is a collaboration.
         </motion.p>
@@ -144,7 +163,7 @@ export default function Hero() {
           </button>
           <button
             onClick={() => scrollToSection('contact')}
-            className="px-8 py-4 border-2 border-emerald-600 text-emerald-700 text-xs font-medium tracking-widest uppercase hover:bg-emerald-600 hover:text-white transition-all duration-300"
+            className="px-8 py-4 border-2 border-emerald-700 text-emerald-800 bg-white/50 backdrop-blur-xs text-xs font-semibold tracking-widest uppercase hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transition-all duration-300 shadow-xs"
           >
             Commission Me
           </button>

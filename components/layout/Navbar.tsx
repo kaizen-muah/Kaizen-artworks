@@ -93,10 +93,10 @@ export default function Navbar() {
               <li key={href}>
                 <button
                   onClick={() => handleNavClick(href)}
-                  className={`label-caps text-xs transition-colors duration-200 pb-0.5 border-b border-transparent ${
+                  className={`text-xs uppercase tracking-[0.18em] transition-all duration-200 pb-1 border-b-2 ${
                     activeSection === href
-                      ? 'text-white border-white'
-                      : 'text-emerald-100 hover:text-white'
+                      ? 'text-white font-semibold border-white drop-shadow-[0_0_6px_rgba(255,255,255,0.5)]'
+                      : 'text-white/85 font-medium border-transparent hover:text-white hover:border-white/40'
                   }`}
                 >
                   {label}
@@ -108,7 +108,7 @@ export default function Navbar() {
           {/* Desktop CTA */}
           <button
             onClick={() => handleNavClick('contact')}
-            className="hidden md:flex items-center gap-2 px-5 py-2 border border-white text-white text-xs font-medium tracking-widest uppercase hover:bg-white hover:text-emerald-700 transition-all duration-200"
+            className="hidden md:flex items-center gap-2 px-5 py-2 border-2 border-white text-white text-xs font-semibold tracking-widest uppercase hover:bg-white hover:text-emerald-800 transition-all duration-200 shadow-sm"
           >
             Commission Me
           </button>

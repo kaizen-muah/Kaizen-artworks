@@ -52,7 +52,7 @@ export default function Gallery() {
     <section
       ref={galleryRef}
       id="gallery"
-      className="section-padding content-max relative bg-white"
+      className="relative bg-transparent max-w-[1720px] w-full mx-auto px-4 sm:px-8 md:px-12 py-16 md:py-24"
       aria-label="Portfolio gallery"
     >
       {/* Header */}
@@ -73,7 +73,7 @@ export default function Gallery() {
 
       {/* Filter tabs */}
       <div
-        className="flex flex-wrap gap-2 mb-12"
+        className="flex flex-wrap gap-2.5 mb-12"
         role="group"
         aria-label="Filter gallery by category"
       >
@@ -83,16 +83,16 @@ export default function Gallery() {
             onClick={() => setActiveCategory(value)}
             aria-pressed={activeCategory === value}
             aria-label={`Filter by ${label}`}
-            className={`flex items-center gap-2 px-4 py-2 text-xs font-medium tracking-widest uppercase border transition-all duration-200 ${
+            className={`flex items-center gap-2 px-4 py-2.5 text-xs font-semibold tracking-widest uppercase transition-all duration-200 border-2 rounded-xs ${
               activeCategory === value
-                ? 'border-emerald-600 text-emerald-700 bg-emerald-50'
-                : 'border-gray-200 text-gray-500 hover:border-gray-400 hover:text-gray-900'
+                ? 'border-emerald-700 text-white bg-emerald-700 shadow-md scale-[1.02]'
+                : 'border-stone-400/80 text-stone-800 bg-[#FDD7B9]/85 hover:bg-[#FDD7B9] hover:border-emerald-700 hover:text-stone-950 shadow-xs'
             }`}
           >
             {label}
             <span
-              className={`inline-flex items-center justify-center w-4 h-4 text-[10px] rounded-full ${
-                activeCategory === value ? 'bg-emerald-600 text-white' : 'bg-gray-100 text-gray-500'
+              className={`inline-flex items-center justify-center min-w-[18px] h-4 px-1 text-[10px] font-bold rounded-full ${
+                activeCategory === value ? 'bg-white text-emerald-800' : 'bg-stone-800/20 text-stone-900'
               }`}
             >
               {getCategoryCount(value)}
@@ -109,7 +109,7 @@ export default function Gallery() {
             variants={staggerContainerVariants}
             initial="hidden"
             animate="visible"
-            className="columns-1 sm:columns-2 lg:columns-3 gap-3 md:gap-4"
+            className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 md:gap-5"
           >
             {filtered.map((artwork) => (
               <motion.article
@@ -117,7 +117,7 @@ export default function Gallery() {
                 layout
                 variants={slideUpVariants}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="gallery-card break-inside-avoid mb-3 md:mb-4 cursor-pointer group relative overflow-hidden bg-white border border-gray-200 hover:border-emerald-500/40 transition-colors duration-300"
+                className="gallery-card break-inside-avoid mb-4 md:mb-5 cursor-pointer group relative overflow-hidden bg-stone-900 border-[3.5px] border-stone-950 rounded-xs shadow-[0_12px_32px_-4px_rgba(0,0,0,0.55),0_4px_14px_-2px_rgba(0,0,0,0.4)] hover:shadow-[0_22px_48px_-6px_rgba(0,0,0,0.75),0_8px_22px_-3px_rgba(0,0,0,0.55)] transition-all duration-300 hover:-translate-y-1"
                 onClick={() => handleCardClick(artwork)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
@@ -135,7 +135,7 @@ export default function Gallery() {
                     alt={`${artwork.title} — ${artwork.description.slice(0, 60)}...`}
                     width={artwork.imageWidth || 800}
                     height={artwork.imageHeight || 800}
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     placeholder={artwork.blurDataURL ? "blur" : "empty"}
                     blurDataURL={artwork.blurDataURL}
                     className="w-full h-auto object-cover"
@@ -143,15 +143,15 @@ export default function Gallery() {
                   />
                 </div>
 
-                {/* Hover overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
-                  <p className="label-caps text-emerald-600 text-[10px] mb-1">{artwork.category}</p>
-                  <h3 className="text-gray-900 font-medium text-sm mb-1">{artwork.title}</h3>
-                  <p className="text-gray-600 text-xs">{artwork.timeTaken}</p>
+                {/* Hover overlay - subtle dark vignette preserving artwork clarity */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+                  <p className="label-caps text-emerald-400 font-semibold text-[10px] mb-1 tracking-wider">{artwork.category}</p>
+                  <h3 className="text-white font-medium text-sm mb-1 drop-shadow-sm">{artwork.title}</h3>
+                  <p className="text-stone-300 text-xs">{artwork.timeTaken}</p>
                   {artwork.price && (
-                    <p className="text-emerald-600 text-xs font-medium mt-1">{artwork.price}</p>
+                    <p className="text-emerald-300 text-xs font-semibold mt-1">{artwork.price}</p>
                   )}
-                  <div className="mt-3 flex items-center gap-1 text-gray-900 text-xs font-medium">
+                  <div className="mt-3 flex items-center gap-1.5 text-white text-xs font-semibold">
                     <span>View</span>
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                       <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>

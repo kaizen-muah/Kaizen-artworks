@@ -1,6 +1,5 @@
 import PageLoader from '@/components/layout/PageLoader';
 import Navbar from '@/components/layout/Navbar';
-import VerticalPictureRoll from '@/components/layout/VerticalPictureRoll';
 import Hero from '@/components/sections/Hero';
 import Gallery from '@/components/sections/Gallery';
 import Process from '@/components/sections/Process';
@@ -14,9 +13,8 @@ export default function Home() {
     <>
       <PageLoader />
       <Navbar />
-      <VerticalPictureRoll />
       
-      <main className="relative z-10 bg-[#0A0A0A] overflow-hidden">
+      <main className="relative z-10 overflow-hidden">
         <Hero />
         <Gallery />
         <Process />

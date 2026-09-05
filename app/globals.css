@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Algerian';
+  src: url('/fonts/algerian.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
   --color-black: #0a0a0a;
   --color-white: #f5f5f0;
@@ -36,9 +44,42 @@ html {
 }
 
 body {
-  background-color: #ffffff;
-  color: #111827;
+  background-color: #dfddd6;
+  color: #1a1a1a;
   font-family: var(--font-inter), system-ui, sans-serif;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* ─── Horizontal Paper Texture with Fine Tactile Grain & Lifted Brightness ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: #dfddd6;
+  background-image:
+    /* Layer 1: Fine Tactile Paper Grain & Tooth (1:1 pixel scale, never stretches) */
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.18  0 0 0 0 0.17  0 0 0 0 0.16  0 0 0 0 0.10 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E"),
+    /* Layer 2: Subtle Ambient Brightening Gradient */
+    radial-gradient(ellipse at 50% 30%, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0.2) 60%, rgba(255, 255, 255, 0.06) 100%),
+    /* Layer 3: User's Paper Texture Oriented Horizontally across the screen */
+    url('/images/sketch-bg-horizontal.jpg');
+  background-size:
+    200px 200px,
+    100% 100%,
+    cover;
+  background-repeat:
+    repeat,
+    no-repeat,
+    no-repeat;
+  background-position:
+    0 0,
+    center,
+    center;
+  filter: brightness(1.12) contrast(1.02);
+  transform: translateZ(0);
 }
 
 /* ─── Hide native cursor on desktop (custom cursor handles it) ── */
@@ -228,7 +269,34 @@ body {
   font-weight: 500;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--color-muted, #6b7280);
+}
+
+/* ─── 4B Pencil Graphite Effect ───────────────────── */
+.pencil-4b {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-weight: 600;
+  color: #2b2c31;
+  text-shadow: 
+    0.4px 0.4px 0.8px rgba(10, 10, 12, 0.4),
+    -0.3px -0.3px 0.6px rgba(45, 48, 55, 0.3),
+    0 0 1.2px rgba(25, 25, 30, 0.35);
+  position: relative;
+  display: inline-block;
+  filter: url(#pencil-texture);
+  -webkit-font-smoothing: antialiased;
+}
+
+@supports (-webkit-background-clip: text) {
+  .pencil-4b-textured {
+    background-image: 
+      radial-gradient(ellipse at 30% 25%, #42434b 0%, #292a2f 60%, #1c1d20 100%),
+      repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.09) 0px, rgba(0, 0, 0, 0.09) 1px, transparent 1px, transparent 3px),
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 128 128' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.25'/%3E%3C/svg%3E");
+    background-size: 100% 100%, 3px 3px, 128px 128px;
+    background-blend-mode: multiply, overlay, multiply;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
 
 /* ─── Skeleton loader ───────────────────────────── */

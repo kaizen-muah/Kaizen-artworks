@@ -1,10 +1,7 @@
 'use client';
 
-import { useRef } from 'react';
-import { gsap } from 'gsap';
-import { useGSAP } from '@gsap/react';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
+import { motion } from 'framer-motion';
+import { staggerContainerVariants, slideUpVariants } from '@/lib/animations';
 
 const steps = [
   {
@@ -58,218 +55,68 @@ const steps = [
 ];
 
 export default function Process() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const stepsRef = useRef<HTMLDivElement>(null);
-  const pathRef = useRef<SVGPathElement>(null);
-  const pathMobileRef = useRef<SVGPathElement>(null);
-  const pencilRef = useRef<HTMLDivElement>(null);
-  const pencilMobileRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(() => {
-    gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
-
-    // 1. Staggered fade & slide up for the steps cards
-    gsap.fromTo(
-      '.process-card',
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: stepsRef.current,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse',
-        },
-      }
-    );
-
-    // 2. Desktop SVG Path drawing animation
-    if (pathRef.current && pencilRef.current) {
-      const length = pathRef.current.getTotalLength();
-      
-      // Set up the path stroke dasharray & offset for the "drawing" effect
-      gsap.set(pathRef.current, {
-        strokeDasharray: length,
-        strokeDashoffset: length,
-      });
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: stepsRef.current,
-          start: 'top 60%',
-          end: 'bottom 50%',
-          scrub: 1.2, // Adds that smooth lag catch-up
-        },
-      });
-
-      tl.to(pathRef.current, {
-        strokeDashoffset: 0,
-        ease: 'none',
-      }, 0);
-
-      // Animate the pencil position along the desktop SVG path
-      tl.to(pencilRef.current, {
-        motionPath: {
-          path: pathRef.current,
-          align: pathRef.current,
-          alignOrigin: [0.5, 0.5],
-          autoRotate: true,
-        },
-        ease: 'none',
-      }, 0);
-    }
-
-    // 3. Mobile SVG Path drawing animation
-    if (pathMobileRef.current && pencilMobileRef.current) {
-      const lengthMobile = pathMobileRef.current.getTotalLength();
-      
-      gsap.set(pathMobileRef.current, {
-        strokeDasharray: lengthMobile,
-        strokeDashoffset: lengthMobile,
-      });
-
-      const tlMobile = gsap.timeline({
-        scrollTrigger: {
-          trigger: stepsRef.current,
-          start: 'top 75%',
-          end: 'bottom 75%',
-          scrub: 1.2,
-        },
-      });
-
-      tlMobile.to(pathMobileRef.current, {
-        strokeDashoffset: 0,
-        ease: 'none',
-      }, 0);
-
-      tlMobile.to(pencilMobileRef.current, {
-        motionPath: {
-          path: pathMobileRef.current,
-          align: pathMobileRef.current,
-          alignOrigin: [0.5, 0.5],
-          autoRotate: true,
-        },
-        ease: 'none',
-      }, 0);
-    }
-  }, { scope: containerRef });
-
   return (
     <section
-      ref={containerRef}
       id="process"
-      className="section-padding content-max relative overflow-hidden bg-white"
+      className="section-padding content-max relative overflow-hidden bg-transparent"
       aria-label="Artistic process"
     >
       {/* Header */}
-      <div className="mb-20 text-center">
-        <p className="label-caps text-emerald-600 mb-3">How it works</p>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="mb-16 text-center"
+      >
+        <p className="label-caps text-emerald-600 mb-3 font-semibold tracking-wider">How it works</p>
         <h2 className="display-text text-[clamp(2.5rem,6vw,5rem)] text-gray-900">
           The Process
         </h2>
-      </div>
+      </motion.div>
 
-      {/* Drawing Connector Paths - Desktop */}
-      <div className="hidden lg:block absolute left-0 right-0 top-[280px] h-[100px] pointer-events-none z-10">
-        <svg className="w-full h-full" viewBox="0 0 1200 100" fill="none" preserveAspectRatio="none">
-          {/* Background guide path */}
-          <path
-            d="M 50,50 C 200,90 300,10 500,50 C 700,90 800,10 950,50 C 1050,75 1100,50 1150,50"
-            stroke="rgba(16, 185, 129, 0.2)"
-            strokeWidth="2"
-            strokeDasharray="6 6"
-          />
-          {/* Active drawing path */}
-          <path
-            ref={pathRef}
-            d="M 50,50 C 200,90 300,10 500,50 C 700,90 800,10 950,50 C 1050,75 1100,50 1150,50"
-            stroke="#10b981"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-          />
-        </svg>
-
-        {/* Floating pencil tip that follows the path */}
-        <div
-          ref={pencilRef}
-          className="absolute w-6 h-6 -ml-3 -mt-3 text-emerald-600"
-          style={{ transformOrigin: 'center' }}
-        >
-          <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full rotate-45 transform">
-            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
-          </svg>
-        </div>
-      </div>
-
-      {/* Drawing Connector Paths - Mobile & Tablet */}
-      <div className="block lg:hidden absolute left-12 top-[240px] bottom-[120px] w-[50px] pointer-events-none z-10">
-        <svg className="w-full h-full" fill="none" preserveAspectRatio="none">
-          {/* Guide path */}
-          <path
-            d="M 10,10 Q 40,150 10,300 T 10,600 T 10,900 T 10,1200"
-            stroke="rgba(16, 185, 129, 0.2)"
-            strokeWidth="2"
-            strokeDasharray="6 6"
-          />
-          {/* Active path */}
-          <path
-            ref={pathMobileRef}
-            d="M 10,10 Q 40,150 10,300 T 10,600 T 10,900 T 10,1200"
-            stroke="#10b981"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-          />
-        </svg>
-
-        {/* Pencil tip (mobile) */}
-        <div
-          ref={pencilMobileRef}
-          className="absolute w-6 h-6 -ml-3 -mt-3 text-emerald-600"
-          style={{ transformOrigin: 'center' }}
-        >
-          <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full rotate-45 transform">
-            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
-          </svg>
-        </div>
-      </div>
-
-      {/* Steps Grid */}
-      <div
-        ref={stepsRef}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-gray-100 relative z-20 border border-gray-100 shadow-sm rounded-sm"
+      {/* Steps Grid - Enters smoothly on scroll, then stays firmly in place */}
+      <motion.div
+        variants={staggerContainerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-60px' }}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 relative z-10"
       >
         {steps.map((step) => (
-          <div
+          <motion.div
             key={step.number}
-            className="process-card bg-white p-8 flex flex-col gap-6 group hover:bg-gray-50 transition-colors duration-300 relative overflow-hidden"
+            variants={slideUpVariants}
+            className="process-card bg-[#FDD7B9] p-8 flex flex-col gap-6 group border border-stone-300/80 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.12)] hover:shadow-[0_8px_25px_-4px_rgba(0,0,0,0.2)] hover:border-emerald-600/40 transition-all duration-300 rounded-xs relative overflow-hidden"
           >
             {/* Number + icon */}
             <div className="flex items-start justify-between">
-              <span
-                className="display-text text-[4rem] text-gray-100 group-hover:text-emerald-100 transition-colors duration-300 select-none leading-none"
-              >
+              <span className="display-text text-[3.5rem] text-stone-800/20 group-hover:text-emerald-700/30 transition-colors duration-300 select-none leading-none font-bold">
                 {step.number}
               </span>
-              <span className="text-emerald-500 mt-1">{step.icon}</span>
+              <span className="text-emerald-700 mt-1">{step.icon}</span>
             </div>
 
             {/* Title */}
-            <h3 className="text-gray-900 font-medium text-lg relative z-10">{step.title}</h3>
+            <h3 className="text-stone-900 font-semibold text-lg relative z-10">{step.title}</h3>
 
             {/* Description */}
-            <p className="text-gray-600 text-sm leading-relaxed relative z-10">{step.description}</p>
-          </div>
+            <p className="text-stone-800 text-sm leading-relaxed relative z-10">{step.description}</p>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {/* Bottom note */}
-      <p className="mt-12 text-center text-gray-500 text-sm">
-        Typical turnaround: <span className="text-gray-900 font-medium">3–21 days</span> depending on complexity.
+      <motion.p
+        initial={{ opacity: 0, y: 15 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="mt-12 text-center text-stone-600 text-sm"
+      >
+        Typical turnaround: <span className="text-stone-900 font-semibold">3–21 days</span> depending on complexity.
         Rush orders available — just ask.
-      </p>
+      </motion.p>
     </section>
   );
 }

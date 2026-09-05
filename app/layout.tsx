@@ -69,7 +69,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="bg-[#0A0A0A] text-[#F5F5F0] antialiased">
+      <body className="text-gray-900 antialiased">
         <CustomCursor />
         <SmoothScroll>{children}</SmoothScroll>
       </body>

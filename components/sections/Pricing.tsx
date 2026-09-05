@@ -9,7 +9,7 @@ export default function Pricing() {
   return (
     <section
       id="pricing"
-      className="section-padding content-max bg-white"
+      className="section-padding content-max bg-transparent"
       aria-label="Commission pricing"
     >
       {/* Header */}
@@ -38,34 +38,34 @@ export default function Pricing() {
           <motion.article
             key={tier.id}
             variants={slideUpVariants}
-            className={`relative flex flex-col p-8 bg-white border transition-all duration-300 group hover:shadow-lg ${
+            className={`relative flex flex-col p-8 bg-[#FDD7B9] border transition-all duration-300 group hover:shadow-xl rounded-xs ${
               tier.popular 
-                ? 'border-emerald-500 shadow-emerald-500/10' 
-                : 'border-gray-200 hover:border-emerald-300'
+                ? 'border-emerald-600 shadow-[0_8px_30px_-5px_rgba(16,185,129,0.25)]' 
+                : 'border-stone-300/80 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.12)] hover:border-emerald-600/50'
             }`}
           >
             {tier.popular && (
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-emerald-600 text-white text-[10px] font-medium tracking-widest uppercase px-3 py-1">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-emerald-700 text-white text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-xs shadow-xs">
                 Most Popular
               </div>
             )}
 
             <div className="mb-8">
-              <h3 className="text-xl font-medium text-gray-900 mb-2">{tier.name}</h3>
-              <p className="text-gray-600 text-sm leading-relaxed min-h-[60px]">{tier.description}</p>
+              <h3 className="text-xl font-semibold text-stone-900 mb-2">{tier.name}</h3>
+              <p className="text-stone-700 text-sm leading-relaxed min-h-[60px]">{tier.description}</p>
             </div>
 
             <div className="mb-8">
-              <p className="display-text text-4xl text-gray-900">{tier.priceRange}</p>
-              <p className="text-gray-500 text-xs mt-2">Delivery: {tier.deliveryTime}</p>
+              <p className="display-text text-4xl text-stone-900 font-medium">{tier.priceRange}</p>
+              <p className="text-stone-600 text-xs mt-2">Delivery: {tier.deliveryTime}</p>
             </div>
 
             <ul className="flex flex-col gap-4 mb-10 flex-1">
               {tier.features.map((feature, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <span className={`mt-0.5 shrink-0 ${feature.included ? 'text-emerald-500' : 'text-gray-300'}`}>
+                  <span className={`mt-0.5 shrink-0 ${feature.included ? 'text-emerald-700 font-bold' : 'text-stone-400'}`}>
                     {feature.included ? (
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                         <path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     ) : (
@@ -74,7 +74,7 @@ export default function Pricing() {
                       </svg>
                     )}
                   </span>
-                  <span className={`text-sm ${feature.included ? 'text-gray-700' : 'text-gray-400'}`}>
+                  <span className={`text-sm ${feature.included ? 'text-stone-800 font-medium' : 'text-stone-500'}`}>
                     {feature.text}
                   </span>
                 </li>
@@ -83,10 +83,10 @@ export default function Pricing() {
 
             <button
               onClick={() => scrollToSection('contact')}
-              className={`w-full py-4 text-xs font-medium tracking-widest uppercase transition-colors duration-200 ${
+              className={`w-full py-4 text-xs font-semibold tracking-widest uppercase transition-all duration-200 rounded-xs ${
                 tier.popular
-                  ? 'bg-emerald-600 text-white hover:bg-emerald-700'
-                  : 'border border-gray-200 text-gray-900 group-hover:border-emerald-500 group-hover:text-emerald-600'
+                  ? 'bg-emerald-700 text-white hover:bg-emerald-800 shadow-sm'
+                  : 'border-2 border-stone-700 text-stone-900 hover:bg-emerald-700 hover:border-emerald-700 hover:text-white'
               }`}
             >
               {tier.ctaLabel}

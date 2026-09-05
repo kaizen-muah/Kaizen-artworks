@@ -4,21 +4,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 export default function PageLoader() {
-  const [isVisible, setIsVisible] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return !sessionStorage.getItem('kaizen-loader-shown');
-    }
-    return true;
-  });
+  // Always trigger landing animation on page load and reload
+  const [isVisible, setIsVisible] = useState(true);
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    if (!isVisible) return;
-
-
-    // Count 0 → 100
-    const duration = 1800;
-    const steps = 60;
+    const duration = 1400;
+    const steps = 50;
     const interval = duration / steps;
     let current = 0;
 
@@ -28,9 +20,8 @@ export default function PageLoader() {
         setCount(100);
         clearInterval(timer);
         setTimeout(() => {
-          sessionStorage.setItem('kaizen-loader-shown', 'true');
           setIsVisible(false);
-        }, 600);
+        }, 400);
       } else {
         setCount(current);
       }
@@ -47,19 +38,19 @@ export default function PageLoader() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed inset-0 z-[9999] bg-[#0A0A0A] flex flex-col items-center justify-center"
+          className="fixed inset-0 z-[9999] bg-[#0c0c0e] flex flex-col items-center justify-center"
           aria-hidden="true"
         >
           {/* Logo / name */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-12 text-center"
+            className="mb-8 text-center"
           >
             <span
-              className="text-6xl md:text-8xl font-light tracking-[0.3em] text-[#F5F5F0]"
-              style={{ fontFamily: 'var(--font-cormorant)' }}
+              className="text-[48px] leading-none text-[#f5f5f0] select-none"
+              style={{ fontFamily: "'Algerian', serif" }}
             >
               K
             </span>
@@ -69,15 +60,15 @@ export default function PageLoader() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.4 }}
-            className="text-sm font-medium tracking-[0.2em] text-[#6B7280] tabular-nums"
+            transition={{ delay: 0.2, duration: 0.4 }}
+            className="text-sm font-medium tracking-[0.25em] text-stone-400 tabular-nums font-mono"
           >
             {String(count).padStart(3, '0')}
           </motion.div>
 
-          {/* Red sweep line */}
+          {/* Emerald sweep line matching site theme */}
           <motion.div
-            className="absolute bottom-0 left-0 h-[2px] bg-[#E63946]"
+            className="absolute bottom-0 left-0 h-[3px] bg-gradient-to-r from-emerald-600 via-emerald-400 to-emerald-600 shadow-[0_0_12px_rgba(16,185,129,0.5)]"
             initial={{ scaleX: 0 }}
             animate={{ scaleX: count / 100 }}
             style={{ width: '100%', transformOrigin: 'left' }}

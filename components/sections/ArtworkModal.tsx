@@ -87,11 +87,11 @@ export default function ArtworkModal({ artwork, onClose, onPrev, onNext }: Artwo
         initial="hidden"
         animate="visible"
         exit="exit"
-        className="relative bg-white border border-gray-200 max-w-5xl w-full max-h-[90vh] overflow-hidden flex flex-col md:flex-row shadow-2xl"
+        className="relative bg-[#FDD7B9] border border-stone-400/80 max-w-5xl w-full max-h-[90vh] overflow-hidden flex flex-col md:flex-row shadow-2xl rounded-xs"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Image */}
-        <div className="relative flex-shrink-0 md:w-[55%] bg-gray-50 flex items-center justify-center overflow-hidden">
+        <div className="relative flex-shrink-0 md:w-[55%] bg-stone-950 flex items-center justify-center overflow-hidden">
           <Image
             src={artwork.imageSrc}
             alt={`${artwork.title} — ${artwork.description.slice(0, 80)}`}
